@@ -8,20 +8,17 @@ import {
 } from './PhoneForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsReducer';
+import { selectContacts } from 'redux/selectors';
 
 export const PhoneForm = () => {
-  const contactList = useSelector(state => state.contacts);
+  const contactList = useSelector(selectContacts);
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const handleChangeName = evt => {
-    const { value } = evt.target;
-    setName(value);
-  };
-  const handleChangeNumber = evt => {
-    const { value } = evt.target;
-    setNumber(value);
+  const handleChange = evt => {
+    const { name, value } = evt.target;
+    name === 'number' ? setNumber(value) : setName(value);
   };
 
   const onSubmit = (name, number) => {
@@ -49,7 +46,7 @@ export const PhoneForm = () => {
         Name
         <InputName
           value={name}
-          onChange={handleChangeName}
+          onChange={handleChange}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -61,7 +58,7 @@ export const PhoneForm = () => {
         Number
         <InputNumber
           value={number}
-          onChange={handleChangeNumber}
+          onChange={handleChange}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"

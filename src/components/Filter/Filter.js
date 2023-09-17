@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FilterInput, Filters } from './Filter.styled';
 import { addFilter } from 'redux/filterReducer';
+import { selectFilter } from 'redux/selectors';
 
 export const Filter = () => {
   const handleSearch = event => {
     dispatch(addFilter(event.target.value));
   };
-  const filterItem = useSelector(state => state.filter);
+  const filterItem = useSelector(selectFilter);
   const dispatch = useDispatch();
   return (
     <>
